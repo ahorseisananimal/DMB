@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private SimpleDateFormat simpleDateFormat;
     private boolean isActive;
+    private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,19 @@ public class MainActivity extends AppCompatActivity {
         simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         handler = new Handler();
+
+        image = (ImageView) findViewById(R.id.soldier);
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image.animate().scaleX(1.3f).setInterpolator(new AccelerateDecelerateInterpolator()).scaleY(1.3f).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        image.animate().setInterpolator(new AccelerateDecelerateInterpolator()).scaleX(1).scaleY(1).start();
+                    }
+                }).start();
+            }
+        });
 
     }
 
