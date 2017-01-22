@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private SimpleDateFormat simpleDateFormat;
     private boolean isActive;
     private ImageView image;
+    private ImageView imageSpeaking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +37,19 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler();
 
         image = (ImageView) findViewById(R.id.soldier);
+        imageSpeaking = (ImageView) findViewById(R.id.soldierSpeaking);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageSpeaking.animate().scaleX(1.6f).setInterpolator(new AccelerateDecelerateInterpolator()).scaleY(1.6f).alpha(1).start();
                 image.animate().scaleX(1.3f).setInterpolator(new AccelerateDecelerateInterpolator()).scaleY(1.3f).withEndAction(new Runnable() {
                     @Override
                     public void run() {
                         image.animate().setInterpolator(new AccelerateDecelerateInterpolator()).scaleX(1).scaleY(1).start();
+                        imageSpeaking.animate().scaleX(1).setInterpolator(new AccelerateDecelerateInterpolator()).scaleY(1).alpha(0).start();
                     }
                 }).start();
+
             }
         });
 
@@ -110,40 +115,41 @@ public class MainActivity extends AppCompatActivity {
 
 
         int currentHours = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinutes = calendar.get(Calendar.MINUTE);
+        int currentSeconds = calendar.get(Calendar.SECOND);
+
         TextView textViewRemainingHours = (TextView) findViewById(R.id.remainingHoursLabel);
         textViewRemainingHours.setText((23 - currentHours) + " hours left");
 
         ProgressBar progressBarDay = (ProgressBar) findViewById(R.id.dayProgressLabel);
         progressBarDay.setIndeterminate(false);
-        progressBarDay.setMax(24);
-        progressBarDay.setProgress(currentHours);
+        progressBarDay.setMax(24*3600*1000);
+        progressBarDay.setProgress((currentHours*3600+currentMinutes*60+currentSeconds)*1000);
 
-        int percentageDay = Math.round(currentHours / 24f * 100);
+        int percentageDay = Math.round((currentHours*3600+currentMinutes*60+currentSeconds)/ (24f*3600) * 100);
         TextView textViewDayPercentage = (TextView) findViewById(R.id.dayPercentageLabel);
         textViewDayPercentage.setText(percentageDay + "%");
 
 
-        int currentMinutes = calendar.get(Calendar.MINUTE);
         TextView textViewRemainingMinutes = (TextView) findViewById(R.id.remainingMinutesLabel);
         textViewRemainingMinutes.setText((59 - currentMinutes) + " minutes left");
 
         ProgressBar progressBarHour = (ProgressBar) findViewById(R.id.hourProgressLabel);
         progressBarHour.setIndeterminate(false);
-        progressBarHour.setMax(60);
-        progressBarHour.setProgress(currentMinutes);
+        progressBarHour.setMax(3600*1000);
+        progressBarHour.setProgress((currentMinutes*60+currentSeconds)*1000);
 
-        int percentageHour = Math.round(currentMinutes / 60f * 100);
+        int percentageHour = Math.round((currentMinutes*60+currentSeconds)/ 3600f * 100);
         TextView textViewHourPercentage = (TextView) findViewById(R.id.hourPercentageLabel);
         textViewHourPercentage.setText(percentageHour + "%");
 
-        int currentSeconds = calendar.get(Calendar.SECOND);
         TextView textViewRemainingSeconds = (TextView) findViewById(R.id.remainingSecondsLabel);
         textViewRemainingSeconds.setText((60 - currentSeconds) + " seconds left");
 
         ProgressBar progressBarMinute = (ProgressBar) findViewById(R.id.minuteProgressLabel);
         progressBarMinute.setIndeterminate(false);
-        progressBarMinute.setMax(60);
-        progressBarMinute.setProgress(currentSeconds);
+        progressBarMinute.setMax(60*1000);
+        progressBarMinute.setProgress(currentSeconds*1000);
 
         int percentageMinute = Math.round(currentSeconds / 60f * 100);
         TextView textViewMinutePercentage = (TextView) findViewById(R.id.minutePercentageLabel);

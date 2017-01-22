@@ -13,6 +13,8 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         tools:context="com.fuagra.dmb.MainActivity">
 
         <TextView
@@ -109,12 +111,27 @@
             android:textSize="10sp"
             tools:text="%" />
 
-        <ImageView
-            android:id="@+id/soldier"
+        <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/app_image"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:clipToPadding="false"
+            android:clipChildren="false">
+
+            <ImageView
+                android:id="@+id/soldier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_image" />
+            <ImageView
+                android:id="@+id/soldierSpeaking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_image_anim"
+                android:alpha="0"/>
+
+
+        </FrameLayout>
 
     </LinearLayout>
 </ScrollView>
