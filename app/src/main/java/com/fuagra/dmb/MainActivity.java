@@ -53,6 +53,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                image.animate().rotation(15).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        image.animate().rotation(-15).withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                image.animate().rotation(0).start();
+                            }
+                        }).start();
+                    }
+                }).start();
+                return true;
+            }
+        });
+
     }
 
     @Override
