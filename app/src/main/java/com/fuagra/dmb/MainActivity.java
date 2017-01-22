@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,21 +20,37 @@ public class MainActivity extends AppCompatActivity {
     private static final String END_DATE_KEY = "EndDate";
     private SharedPreferences preferences;
     private Handler handler;
+    private SimpleDateFormat simpleDateFormat;
+    private boolean isActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         handler = new Handler();
 
-        update(simpleDateFormat);
-
-
     }
 
-    private void update(final SimpleDateFormat simpleDateFormat) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isActive = true;
+        update();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isActive = false;
+    }
+
+    private void update() {
+        if (!isActive){
+            Log.d("DMB", "Update has been stopped");
+            return;
+        }
         preferences = getSharedPreferences(SHARED_PREFERENCES_NAME, MODE_PRIVATE);
         long startDate = preferences.getLong(START_DATE_KEY, 0);
         long endDate = preferences.getLong(END_DATE_KEY, 0);
@@ -119,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                update(simpleDateFormat);
+                update();
             }
         }, 200);
     }
