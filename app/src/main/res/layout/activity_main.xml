@@ -19,13 +19,13 @@
 
 
     <TextView
-        android:id="@+id/dayLabel"
+        android:id="@+id/remainingDaysLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="32sp" />
 
     <ProgressBar
-        android:id="@+id/dayProgress"
+        android:id="@+id/dayProgressLabel"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -37,4 +37,25 @@
         android:textSize="10sp"
         android:layout_gravity="center_horizontal"
         tools:text="%"/>
+
+    <TextView
+        android:id="@+id/remainingSecondsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp" />
+
+    <ProgressBar
+        android:id="@+id/minuteProgressLabel"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/minutePercentageLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:layout_gravity="center_horizontal"
+        tools:text="%"/>
+
 </LinearLayout>
