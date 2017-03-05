@@ -17,6 +17,7 @@
 package com.fuagra.dmb;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -218,6 +219,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 tabView.setContentDescription(desc);
             }
 
+            tabTitleView.setTextColor(Color.WHITE);
             mTabStrip.addView(tabView);
             if (i == mViewPager.getCurrentItem()) {
                 tabView.setSelected(true);
